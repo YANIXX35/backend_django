@@ -68,12 +68,19 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}'
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
         },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
         'file': {
             'level': 'INFO',
@@ -93,5 +100,9 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
     },
 }
