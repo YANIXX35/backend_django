@@ -3,15 +3,24 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# ==============================
 # SECURITY
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key')
+# ==============================
 
-DEBUG = False
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-key")
 
-ALLOWED_HOSTS = ['*']
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ["*"]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
+# ==============================
 # APPLICATIONS
+# ==============================
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,9 +36,13 @@ INSTALLED_APPS = [
 ]
 
 
+# ==============================
 # MIDDLEWARE
+# ==============================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'corsheaders.middleware.CorsMiddleware',
@@ -43,10 +56,17 @@ MIDDLEWARE = [
 ]
 
 
+# ==============================
+# URLS
+# ==============================
+
 ROOT_URLCONF = 'portfolio_project.urls'
 
 
+# ==============================
 # TEMPLATES
+# ==============================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -64,11 +84,17 @@ TEMPLATES = [
 ]
 
 
+# ==============================
 # WSGI
+# ==============================
+
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 
+# ==============================
 # DATABASE
+# ==============================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -77,7 +103,10 @@ DATABASES = {
 }
 
 
+# ==============================
 # PASSWORD VALIDATION
+# ==============================
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -94,7 +123,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# ==============================
 # INTERNATIONALIZATION
+# ==============================
+
 LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'Africa/Abidjan'
@@ -103,17 +135,28 @@ USE_I18N = True
 USE_TZ = True
 
 
+# ==============================
 # STATIC FILES
+# ==============================
+
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+# ==============================
+# DEFAULT FIELD
+# ==============================
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# ==============================
 # DJANGO REST FRAMEWORK
+# ==============================
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -121,23 +164,36 @@ REST_FRAMEWORK = {
 }
 
 
+# ==============================
 # CORS (Angular)
+# ==============================
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-# EMAIL CONFIGURATION (SECURE)
+# ==============================
+# EMAIL CONFIGURATION
+# ==============================
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_PORT = 587
+
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
+# ==============================
 # LOGGING
+# ==============================
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
