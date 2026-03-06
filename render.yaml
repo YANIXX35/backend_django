@@ -1,0 +1,19 @@
+services:
+  # Service Web Django
+  - type: web
+    name: portfolio-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: gunicorn portfolio_project.wsgi:application --bind 0.0.0.0:$PORT --workers=3
+    envVars:
+      - key: SECRET_KEY
+        value: django-insecure-change-me-in-production
+      - key: DEBUG
+        value: false
+      - key: RENDER_EXTERNAL_HOSTNAME
+        sync: false
+      - key: EMAIL_HOST_USER
+        value: kyliyanisse@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
