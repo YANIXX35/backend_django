@@ -11,10 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-# Utiliser les settings de production sur Render
-if 'RENDER_EXTERNAL_HOSTNAME' in os.environ:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.render_settings')
-else:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_project.settings')
 
 application = get_wsgi_application()

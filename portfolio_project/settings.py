@@ -3,23 +3,16 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = 'django-insecure-your-secret-key-here'
 
-# ==============================
-# SECURITY
-# ==============================
+DEBUG = True
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-key")
-
-DEBUG = os.environ.get("DEBUG", "False") == "True"
-
-ALLOWED_HOSTS = ["*"]
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
-# ==============================
-# APPLICATIONS
-# ==============================
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'backend-django-9.onrender.com',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -28,25 +21,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'corsheaders',
-
     'portfolio',
 ]
 
-
-# ==============================
-# MIDDLEWARE
-# ==============================
-
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'corsheaders.middleware.CorsMiddleware',
-
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,17 +37,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# ==============================
-# URLS
-# ==============================
-
 ROOT_URLCONF = 'portfolio_project.urls'
-
-
-# ==============================
-# TEMPLATES
-# ==============================
 
 TEMPLATES = [
     {
@@ -83,17 +55,7 @@ TEMPLATES = [
     },
 ]
 
-
-# ==============================
-# WSGI
-# ==============================
-
 WSGI_APPLICATION = 'portfolio_project.wsgi.application'
-
-
-# ==============================
-# DATABASE
-# ==============================
 
 DATABASES = {
     'default': {
@@ -101,11 +63,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# ==============================
-# PASSWORD VALIDATION
-# ==============================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -122,107 +79,58 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# ==============================
-# INTERNATIONALIZATION
-# ==============================
-
 LANGUAGE_CODE = 'fr-fr'
-
 TIME_ZONE = 'Africa/Abidjan'
-
 USE_I18N = True
 USE_TZ = True
 
-
-# ==============================
-# STATIC FILES
-# ==============================
-
 STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# ==============================
-# DEFAULT FIELD
-# ==============================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# ==============================
-# DJANGO REST FRAMEWORK
-# ==============================
-
+# Configuration REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
 }
 
+# Configuration CORS
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
 
-# ==============================
-# CORS (Angular)
-# ==============================
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
-
-# ==============================
-# EMAIL CONFIGURATION
-# ==============================
-
+# Configuration Email SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_HOST = 'smtp.gmail.com'
-
 EMAIL_PORT = 587
-
 EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-
+EMAIL_HOST_USER = 'kyliyanisse@gmail.com'
+EMAIL_HOST_PASSWORD = 'dvjshckzcipcbbvw'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
-# ==============================
-# LOGGING
-# ==============================
-
+# Configuration des logs
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {name} {process:d} {thread:d} {message}',
-            'style': '{',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
         },
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'django.log',
-            'formatter': 'verbose',
         },
     },
-    
     'loggers': {
         'django': {
             'handlers': ['console', 'file'],
@@ -234,10 +142,5 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-    },
-    
-    'root': {
-        'handlers': ['console'],
-        'level': 'INFO',
     },
 }
